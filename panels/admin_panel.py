@@ -1,29 +1,21 @@
 from core.user import Employee
 from core.data_store import DataStore
+from core.validators import validate_email, validate_password
+
+
+admin_username = "admin"
+admin_password = "1234"
+
 
 class AdminPanel:
-    admin_username = "admin"
-    admin_password = "1234"
-
-    def login(self):
-        print("\n Admin Login")
-        username = input("Username: ")
-        password = input("Password: ")
-
-        if username == self.admin_username and password == self.admin_password:
-            print("Admin logged in successfully!")
-            self.menu()
-        else:
-            print("Invalid username or password!")
-
-    def menu(self):
+    def run(self):
+        print("\nAdmin Login")
+        if not self.admin_login():
+            return
+        
         while True:
-            print("1. Add Employee")
-            print("2. Remove Employee")
-            print("3. View Employees")
-            print("4. Exit")
-
-            choice = input("Choose an option: ")
+            self.admin_menu()
+            choice = input("Choose an option: ").strip()
 
             if choice == "1":
                 self.add_employee()
@@ -32,50 +24,102 @@ class AdminPanel:
             elif choice == "3":
                 self.list_employees()
             elif choice == "4":
-                break
+                print("\nBack to main menu")
+                return
             else:
                 print("Invalid option!")
 
+    def admin_login(self) -> bool:
+        username = input("Username: ")
+        password = input("Password: ")
+        if username == admin_username and password == admin_password:
+            print("Admin logged in successfully!")
+            return True
+        print("Invalid username or password!")
+
+    @staticmethod
+    def admin_menu():
+        print("\nAdmin Menu:")
+        print("1. Add Employee")
+        print("2. Remove Employee")
+        print("3. View Employees")
+        print("4. Exit")
+
     def add_employee(self):
-        print("Add Employee")
+        print("\nAdd Employee")
         first_name = input("First name: ")
         last_name = input("Last name: ")
         email = input("Email: ")
         username = input("Username: ")
         password = input("Password: ")
 
-        for emp in DataStore.employees:
-            if emp.username == username:
-                print("Username already exists")
-                return
-            if emp.email == email:
-                print("Email already exists")
-                return
+        #empty checks
+        if not all([first_name, last_name, email, username, password]):
+            print("All fields are required.")
+            return
         
-        employee = Employee(username, password, email, first_name, last_name)
+        # validations
+        if not validate_email(email):
+            print("Email format is invalid.")
+            return
+        
+        if not validate_password(password):
+            print("The password must contain English letters + numbers + @ or &")
+            return
+        
+        # uniqueness checks
+        if self.email_exists(email):
+            print("This email already exists")
+            return
+        
+        if self.username_exists(username):
+            print("This username already exists")
+            return
+        
+        employee = Employee(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            username=username,
+            password=password,
+        )
+
         DataStore.employees.append(employee)
         print("Employee added successfully")
 
     def remove_employee(self):
         print("Remove Employee")
         username = input("Employee username: ")
-
+        if not username:
+            print("Username cannot be empty")
+            return
+        
         for emp in DataStore.employees:
             if emp.username == username:
                 DataStore.employees.remove(emp)
                 print("Employee removed")
                 return
             
-        print("Employee not found")
+        print("No employee with this username was found")
 
     def list_employees(self):
-        print("Employees List")
+        print("List of employees")
         if not DataStore.employees:
             print("No employees registered")
             return
         
         for i, emp in enumerate(DataStore.employees, start=1):
             print(f"{i}. {emp.first_name} {emp.last_name} | {emp.username} | {emp.email}")
+
+    @staticmethod
+    def email_exists(email: str) -> bool:
+        return any(emp.email.lower() == email.lower() for emp in DataStore.employees)
+    
+    @staticmethod
+    def username_exists(username: str) -> bool:
+        return any(emp.username.lower() == username.lower() for emp in DataStore.employees)
+
+
 
 
 
