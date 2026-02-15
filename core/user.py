@@ -6,5 +6,8 @@ class User:
         self.username = username
         self.password = password
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} | Username: {self.username} | Password: {self.password} | Email: {self.email}"
+
 class Employee(User):
     pass
