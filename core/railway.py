@@ -1,10 +1,13 @@
 class Line:
-    def __init__(self, name, origin, destination, _count, stations):
+    def __init__(self, name, origin, destination, stations):
         self.name = name
         self.origin = origin
         self.destination = destination
-        self._count = _count
         self.stations = stations
+
+    def __str__(self):
+        return f"Line: {self.name} | {self.origin} -> {self.destination} | Stations({len(self.stations)}): {', '.join(self.stations)}"
+        
 
 class Train:
     def __init__(self, train_id, route, average_speed, stoppage, quality_level, price, capacity):

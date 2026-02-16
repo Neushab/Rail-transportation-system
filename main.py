@@ -19,12 +19,12 @@ def main():
         elif choice == "2":
             EmployeePanel().run()
         elif choice == "3":
-            print("پنل کاربر هنوز پیاده‌سازی نشده.")
+            print("in progress ...")
         elif choice == "4":
             print("exit")
             break
         else:
-            print("گزینه نامعتبر است.")
+            print("Invalid option!")
             
 
 if __name__ == "__main__":
