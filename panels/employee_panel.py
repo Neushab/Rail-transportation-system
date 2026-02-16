@@ -211,7 +211,148 @@ class EmployeePanel:
             print(f"{i}. {line}")
 
     # ---------- Train ----------
+    
+    def add_train(self):
+        print("\nAdd train")
+        train_name = input("Train name: ")
+        if not train_name or (self.train_exists(train_name)):
+            IndexError("Train name cannot be empty")
+            return
+        line_name = input("Line name: ")
+        if not line_name:
+            print("Line name cannot be empty")
+            return
+        speed = input("speed: ")
+        if not speed:
+            print("Speed cannot be empty")
+            return
+        stoptime = input("Stop time: ")
+        if not stoptime:
+            print("Stop time cannot be empty")
+            return
+        train_level = input("Train level: ")
+        if not train_level:
+            print("Train level cannot be empty")
+            return
+        price = input("Price: ")
+        if not price:
+            print("Price cannot be empty")
+            return
+        capacity = input("Capacity: ")
+        if not capacity:
+            print("Capacity cannot be empty")
+            return
+        DataStore.trains.append(
+            Train(
+                name=train_name,
+                line_name=line_name,
+                speed=speed,
+                stoptime=stoptime,
+                train_level=train_level,
+                price=price,
+                capacity=capacity
+            )
+        )
+        print("Train added successfully")
+    
+    def update_train(self):
+        print("/nUpdate train")
+        nam = input("Train name: ")
+        if not nam:
+            print("Train name cannot be empty")
+            return
+        for i in DataStore.trains:
+            if i.name == nam:
+                print("\n select train information: ")
+                print(i)
 
+                print("1. Train name")
+                print("2. Line name")
+                print("3. Speed")
+                print("4. Stop time")
+                print("5. Train level")
+                print("6. Price")
+                print("7. Capacity")
+
+                vizhegi = input("choice: ")
+
+                if vizhegi == "1":
+                    new_name = input("Enter the new train name: ")
+                if not new_name or (new_name != i.name and self.train_exists(new_name)):
+                    print("The new name is invalid or already exists")
+                    return
+                i.name = new_name
+                print("Train name is updated successfully")
+
+                if vizhegi == "2":
+                    new_line_name = input("Enter the new line name: ")
+                if not new_line_name:
+                    print("Line name cannot be empty")
+                    return
+                i.line_name = new_line_name
+                print("Line name is updated successfully")
+
+                if vizhegi == "3":
+                    new_speed = input("Enter the new speed: ")
+                if not new_speed:
+                    print("Speed cannot be empty")
+                    return
+                i.speed = new_speed
+                print("Speed is updated successfully")
+
+                if vizhegi == "4":
+                    new_stoptime = input("Enter the new stop time: ")       
+                if not new_stoptime:
+                    print("Stop time cannot be empty")
+                    return
+                i.stoptime = new_stoptime
+                print("Stop time is updated successfully")
+
+                if vizhegi == "5":
+                    new_train_level = input("Enter the new train level: ")  
+                if not new_train_level:
+                    print("Train level cannot be empty")
+                    return
+                i.train_level = new_train_level
+
+                if vizhegi == "6":
+                    new_price = input("Enter the new price: ")
+                if not new_price:
+                    print("Price cannot be empty")
+                    return  
+                i.price = new_price
+                print("Price is updated successfully")
+            
+                if vizhegi == "7":
+                    new_capacity = input("Enter the new capacity: ")
+                if not new_capacity:
+                    print("Capacity cannot be empty")
+                    return
+                i.capacity = new_capacity
+                print("Capacity is updated successfully")
+                return
+        print("No train with this name was found")
+
+    def delete_train(self):
+        print("\nDelete train")
+        name = input("Enter the name of the train to delete: ")
+        if not name:
+            print("Train name cannot be empty")
+            return
+        for i, train in enumerate(DataStore.trains):
+            if train.name == name:
+                DataStore.trains.pop(i)
+                print("Train deleted successfully")
+                return
+        print("No train with this name was found")
+    
+    def list_trains(self):
+        print("\nList of trains")
+        if not DataStore.trains:
+            print("No trains have been recorded")
+            return
+        for i, train in enumerate(DataStore.trains, start=1):
+            print(f"{i}. {train}")
 
     # ---------- Helpers ----------
 
