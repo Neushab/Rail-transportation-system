@@ -1,7 +1,7 @@
 from core.data_store import DataStore
 from panels.admin_panel import AdminPanel
 from panels.employee_panel import EmployeePanel
-
+from panels.user_panel import NormalUserPanel
 def main():
     store = DataStore()
 
@@ -19,7 +19,7 @@ def main():
         elif choice == "2":
             EmployeePanel().run()
         elif choice == "3":
-            print("in progress ...")
+            NormalUserPanel().run()
         elif choice == "4":
             print("exit")
             break
@@ -29,5 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
