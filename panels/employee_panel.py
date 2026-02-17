@@ -264,62 +264,62 @@ class EmployeePanel:
     
     def update_train(self):
         print("\nUpdate train")
-        nam = input("Train name: ")
-        if not nam:
-            print("Train name cannot be empty")
+        train_id = input("Train ID: ")
+        if not train_id:
+            print("Train ID cannot be empty")
             return
-        train = self.get_train(nam)
+        train = self.get_train(train_id)
         if not train:
-            print("No train with this name was found")
+            print("No train with this ID was found")
             return
         print("\n select train information: ")
         print(train)
         print("\nWhich feature do you want to update?")
-        print("1. Train name")
-        print("2. Line name")
-        print("3. Speed")
-        print("4. Stop time")
-        print("5. Train level")
+        print("1. Train ID")
+        print("2. Route (Line name)")
+        print("3. Average speed")
+        print("4. Stoppage (Stop time)")
+        print("5. Quality level (Train level)")
         print("6. Price")
         print("7. Capacity")
 
         vizhegi = int(input("choice: "))
 
         if vizhegi == 1:
-            new_name = input("Enter the new train name: ")
-            if not new_name or (new_name != train.name and self.train_exists(new_name)):
-                print("The new name is invalid or already exists")
+            new_train_id = input("Enter the new Train ID: ")
+            if not new_train_id or (new_train_id != train.train_id and self.train_exists(new_train_id)):
+                print("The new Train ID is invalid or already exists")
                 return
-            train.name = new_name
-            print("Train name is updated successfully")
+            train.train_id = new_train_id
+            print("Train ID is updated successfully")
         elif vizhegi == 2:
-            new_line_name = input("Enter the new line name: ")
-            if not new_line_name:
-                print("Line name cannot be empty")
+            new_route = input("Enter the new route (Line name): ")
+            if not new_route:
+                print("Route cannot be empty")
                 return
-            train.line_name = new_line_name
-            print("Line name is updated successfully")
+            train.route = new_route
+            print("Route is updated successfully")
         elif vizhegi == 3:
-            new_speed = int(input("Enter the new speed: "))
+            new_speed = int(input("Enter the new average speed: "))
             if not new_speed:
-                print("Speed cannot be empty")
+                print("Average speed cannot be empty")
                 return
-            train.speed = new_speed
-            print("Speed is updated successfully")
+            train.average_speed = new_speed
+            print("Average speed is updated successfully")
         elif vizhegi == 4:
-            new_stoptime = float(input("Enter the new stop time: "))
-            if not new_stoptime:
-                print("Stop time cannot be empty")
+            new_stoppage = float(input("Enter the new stoppage (stop time): "))
+            if not new_stoppage:
+                print("Stoppage cannot be empty")
                 return
-            train.stoptime = new_stoptime
-            print("Stop time is updated successfully")
+            train.stoppage = new_stoppage
+            print("Stoppage is updated successfully")
         elif vizhegi == 5:
-            new_train_level = int(input("Enter the new train level: "))
-            if not new_train_level:
-                print("Train level cannot be empty")
+            new_quality_level = int(input("Enter the new quality level (train level): "))
+            if not new_quality_level:
+                print("Quality level cannot be empty")
                 return
-            train.train_level = new_train_level
-            print("Train level is updated successfully")
+            train.quality_level = new_quality_level
+            print("Quality level is updated successfully")
         elif vizhegi == 6:
             new_price = int(input("Enter the new price: "))
             if not new_price:
@@ -380,12 +380,12 @@ class EmployeePanel:
         name = name.strip().lower()
         return any(train.name.strip().lower() == name for train in DataStore.trains)
 
-    def get_train(self, name):
-        name = name.strip().lower()
+    @staticmethod
+    def get_train(train_id):
 
-        for train in DataStore.trains:
-            if train.name.strip().lower() == name:
-                return train  
+        for t in DataStore.trains:
+            if t.train_id.strip().lower() == train_id.lower:
+                return t  
         return None                      
     @staticmethod
     def safe_int(value):
