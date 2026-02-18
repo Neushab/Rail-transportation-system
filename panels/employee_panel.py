@@ -328,10 +328,11 @@ class EmployeePanel:
         if not line_name:
             print("Line name cannot be empty")
             return
-<<<<<<< HEAD
+        
         if not self.line_exists(line_name):
             print("This line does not exist")
             return
+        
         speed = int(input("speed: "))
         if not speed:
             print("Speed cannot be empty")
@@ -349,55 +350,6 @@ class EmployeePanel:
             print("Price cannot be empty")
             return
         capacity = int(input("Capacity: "))
-=======
-        
-        speed = input("Average speed: ")
-
-        if speed == "0":
-            print("\nBake to employee menu")
-            return
-        
-        if not speed:
-            print("Average speed cannot be empty")
-            return
-        
-        stoptime = input("Stop time: ")
-
-        if stoptime == "0":
-            print("\nBake to employee menu")
-            return
-        
-        if not stoptime:
-            print("Stop time cannot be empty")
-            return
-        
-        train_level = input("Train level: ")
-
-        if train_level == "0":
-            print("\nBake to employee menu")
-            return
-        
-        if not train_level:
-            print("Train level cannot be empty")
-            return
-        
-        price = input("Price: ")
-
-        if price == "0":
-            print("\nBake to employee menu")
-            return
-        
-        if not price:
-            print("Price cannot be empty")
-            return
-        
-        capacity = input("Capacity: ")
-
-        if capacity == "0":
-            print("\nBake to employee menu")
-            return
-        
->>>>>>> 84fb101 (employee panel (lines) edited)
         if not capacity:
             print("Capacity cannot be empty")
             return
@@ -528,7 +480,6 @@ class EmployeePanel:
                 return line
             
         return None
-<<<<<<< HEAD
     
     def train_exists (self, name):
         name = name.strip().lower()
@@ -541,20 +492,7 @@ class EmployeePanel:
             if t.train_id.strip().lower() == train_id.lower:
                 return t  
         return None                      
-    @staticmethod
-    def safe_int(value):
-        try:
-            return int(value)
-        except ValueError:
-            return None
-                
-    def read_int(self, prompt):
-        _input = input(prompt).strip()
-        if not _input:
-            return None
-        return self.safe_int(_input)
-=======
->>>>>>> 84fb101 (employee panel (lines) edited)
+
 
     
 
