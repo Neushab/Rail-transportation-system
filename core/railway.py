@@ -20,7 +20,10 @@ class Train:
         self.capacity = capacity
 
     def __str__(self):
-        return f"Train ID: {self.train_id} | Line name: {self.line_name} | Average speed: {self.average_speed} | Stoppage: {self.stoppage} | Quality level: {self.quality_level} | Price: {self.price} | Capacity: {self.capacity}"
+        return (
+            f"Train ID: {self.train_id} | Line name: {self.line_name} | Average speed: {self.average_speed} | "
+            f"Stoppage: {self.stoppage} | Quality level: {self.quality_level} | Price: {self.price} | Capacity: {self.capacity}"
+        )
 
 
 
