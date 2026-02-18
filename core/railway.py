@@ -10,15 +10,26 @@ class Line:
         
 
 class Train:
-    def __init__(self, train_id, route, average_speed, stoppage, quality_level, price, capacity):
+    def __init__(self, train_id, line_name, average_speed, stoppage, quality_level, price, capacity):
         self.train_id = train_id
-        self.route = route
+        self.line_name = line_name
         self.average_speed = average_speed
         self.stoppage = stoppage
         self.quality_level = quality_level
         self.price = price
         self.capacity = capacity
+<<<<<<< HEAD
     
     def __str__(self):
         return f"Train ID: {self.train_id} | {self.route} | {self.average_speed} | {self.stoppage} | {self.quality_level} | {self.price} | {self.capacity}"
  
+=======
+
+    def __str__(self):
+        return f"Train ID: {self.train_id} | Line name: {self.line_name} | Average speed: {self.average_speed} | Stoppage: {self.stoppage} | Quality level: {self.quality_level} | Price: {self.price} | Capacity: {self.capacity}"
+
+
+
+
+        
+>>>>>>> 84fb101 (employee panel (lines) edited)

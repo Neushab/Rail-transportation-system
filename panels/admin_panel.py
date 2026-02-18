@@ -27,7 +27,7 @@ class AdminPanel:
                 print("\nBack to main menu")
                 return
             else:
-                print("Invalid option!")
+                print("\nInvalid option!")
 
     # ---------- Auth ----------
 
@@ -35,9 +35,9 @@ class AdminPanel:
         username = input("Username: ")
         password = input("Password: ")
         if username == admin_username and password == admin_password:
-            print("Admin logged in successfully!")
+            print("\nAdmin logged in successfully!")
             return True
-        print("Invalid username or password!")
+        print("\nInvalid username or password!")
 
     # ---------- Menu ----------
 
@@ -109,7 +109,7 @@ class AdminPanel:
     def list_employees(self):
         print("\nList of employees")
         if not DataStore.employees:
-            print("No employees registered")
+            print("\nNo employees registered")
             return
         
         for i, emp in enumerate(DataStore.employees, start=1):

@@ -33,27 +33,36 @@ class EmployeePanel:
                 print("\nBack to main menu")
                 break
             else:
-                print("Invalid option!")
+                print("\nInvalid option!")
 
     # ---------- Auth ----------
 
     def employee_login(self): 
         if not DataStore.employees:
-            print("No employees have been registered by the admin.")
+            print("\nNo employees have been registered by the admin.")
             return False
-                
-        username = input("Employee username: ")
-        password = input("Employee password: ")
+        
+        while True:
+            print("\nEmployee login")
+            print("Enter 0 to Exit")
+            username = input("Employee username: ")
+            if username == "0":
+                    print("\nBake to main menu")
+                    return False
+        
+            password = input("Employee password: ")
+            if password == "0":
+                    print("\nBake to main menu")
+                    return False
 
-        for emp in DataStore.employees:
-            if emp.username == username and emp.password == password:
-                print("Employee logged in successfully!")
-                return True
+            for emp in DataStore.employees:
+                if emp.username == username and emp.password == password:
+                    print("\nEmployee logged in successfully!")
+                    return True
                     
-        print("The username or password is incorrect")
-        return False
+            print("\nThe username or password is incorrect")
+            continue
     
-
     # ---------- Menu ----------
 
     @staticmethod
@@ -73,38 +82,64 @@ class EmployeePanel:
 
     def add_line(self):
         print("\nAdd line")
+        print("Enter 0 to Exit")
+
         name = input("line name: ")
 
+        if name == "0":
+            print("\nBake to employee menu")
+            return
+        
         #empty checks (line name)
         if not name:
-            print("Line name is required")
+            print("\nLine name is required")
             return
                 
         # uniqueness checks (line name)
         if self.line_exists(name):
-            print("This line already exists")
+            print("\nThis line already exists")
             return
                 
         origin = input("origin: ")
+        if origin == "0":
+            print("\nBake to employee menu")
+            return
+        
         destination = input("destination: ")
-
+        if destination == "0":
+            print("\nBake to employee menu")
+            return
+        
         #empty checks (origin and destination)
         if not origin or not destination:
-            print("origin and destination are required")
+            print("\norigin and destination are required")
             return
-                
-        count = self.read_int("Number of stations: ")
-        if count is None or count <= 0:
-            print("There should be at least one station")
+          
+        count_input = input("Number of stations: ")
+
+        if count_input == "0":
+            print("\nBack to employee menu")
             return
-                
+        
+        if not count_input.isdigit():
+            print("\nPlease enter a valid number")
+            return
+        
+        count = int(count_input)
+        if count < 2:
+            print("\nThere should be at least two stations")
+            return
+        
         stations = []
         for i in range(count):
             s = input(f"station name {i+1}: ")
+            if s == "0":
+                print("\nBake to employee menu")
+                return
 
             #empty checks (Station)
             if not s:
-                print("Station name cannot be empty")
+                print("\nStation name cannot be empty")
                 return
             stations.append(s)
 
@@ -113,99 +148,152 @@ class EmployeePanel:
 
         )
 
-        print("Line added successfully")                
+        print("\nLine added successfully")                
                 
 
     def update_line(self):
-        print("\nUpdate line")
-        name = input("Line name: ")
-        if not name:
-            print("Line name cannot be empty")
-            return
+        while True:
+            print("\nUpdate line")
+            print("Enter 0 to Exit")
+        
+            name = input("Line name: ")
+            if name == "0":
+                print("\nBake to employee menu")
+                return
+
+            if not name:
+                print("\nLine name cannot be empty")
+                continue
                 
-        line = self.get_line(name)
-        if not line:
-            print("No line with this name was found")
-            return
-                
-        print("\nSelected line information: ")
-        print(line)
+            line = self.get_line(name)
+            if not line:
+                print("\nNo line with this name was found")
+                continue
 
-        print("\nWhich feature do you want to update?")
-        print("1. line name")
-        print("2. origin")
-        print("3. destination")
-        print("4. List of stations")
+            while True:    
+                print("\nSelected line information: ")
+                print(line)
 
-        line_feature_choice = input("choice: ")
+                print("\nWhich feature do you want to update?")
+                print("1. line name")
+                print("2. origin")
+                print("3. destination")
+                print("4. List of stations")
+                print("5. Exit")
 
-        if line_feature_choice == "1":
-            new_name = input("Enter the new line name: ")
-            if not new_name or (new_name != line.name and self.line_exists(new_name)):
-                print("The new name is invalid or already exists")
-                return
-            for t in DataStore.trains:
-                if t.line_name == line.name:
-                    t.line_name = new_name
-            line.name = new_name
-            print("Line name is updated successfully")
+                line_feature_choice = input("choice: ")
 
-        elif line_feature_choice == "2":
-            new_origin = input("Enter the new origin: ")
-            if not new_origin:
-                print("new origin cannot be empty")
-                return
-            line.origin = new_origin
-            print("origin is updated successfully")
+                if line_feature_choice == "1":
+                    print("Enter 0 to Exit")
+                    new_name = input("Enter the new line name: ")
+                    if new_name == "0":
+                        continue
+                    if not new_name or (new_name != line.name and self.line_exists(new_name)):
+                        print("\nThe new name is invalid or already exists")
+                        continue
+                    for t in DataStore.trains:
+                        if t.line_name == line.name:
+                            t.line_name = new_name
+                    line.name = new_name
+                    print("\nLine name is updated successfully")
 
-        elif line_feature_choice == "3":
-            new_destination = input("Enter the new destination: ")
-            if not new_destination:
-                print("new destination cannot be empty")
-                return
-            line.destination = new_destination
-            print("destination is updated successfully")
-                
-        elif line_feature_choice == "4":
-            count = self.read_int("Number of stations: ")
-            if count is None or count <= 0:
-                print("The number is invalid")
-                return
-            stations = []
-            for i in range(count):
-                s = input(f"Station name {i+1}: ")
-                if not s:
-                    print("Station name cannot be empty")
+                elif line_feature_choice == "2":
+                    print("Enter 0 to Exit")
+                    new_origin = input("Enter the new origin: ")
+                    if new_origin == "0":
+                        continue
+                    if not new_origin:
+                        print("\nnew origin cannot be empty")
+                        continue
+                    line.origin = new_origin
+                    print("\norigin is updated successfully")
+
+                elif line_feature_choice == "3":
+                    print("Enter 0 to Exit")
+                    new_destination = input("Enter the new destination: ")
+                    if new_destination == "0":
+                        continue
+                    if not new_destination:
+                        print("\nnew destination cannot be empty")
+                        continue
+                    line.destination = new_destination
+                    print("\ndestination is updated successfully")
+                    
+                elif line_feature_choice == "4":
+                    print("\nEnter 0 to Exit")
+
+                    count_input = input("Number of stations: ").strip()
+                    if count_input == "0":
+                        continue
+                    if not count_input.isdigit():
+                        print("\nPlease enter a valid number")
+                        continue
+
+                    count = int(count_input)
+                    if count < 2:
+                        print("\nThere should be at least two stations")
+                        continue
+
+                    stations = []
+                    cancelled = False
+
+                    for i in range(count):
+                        s = input(f"Station name {i+1}: ")
+                        if s == "0":
+                            cancelled = True
+                            break
+                        
+                        if not s:
+                            print("\nStation name cannot be empty")
+                            cancelled = True
+                            break
+                        stations.append(s)
+
+                    if cancelled:
+                        continue
+
+                    line.stations = stations
+
+                    print("\nThe station list has been updated")
+
+                elif line_feature_choice == "5":
+                    print("\nBake to employee menu")
                     return
-                stations.append(s)
-                line.stations = stations
-                print("The station list has been updated")
 
-        else:
-            print("Invalid option!")
+                else:
+                    print("\nInvalid option!")
+
 
     def delete_line(self):
-        print("Delete Line")
-        name = input("Line name: ")
-        if not name:
-            print("Line name cannot be empty")
-            return
+        while True:
+            print("\nDelete Line")
+            print("Enter 0 to Exit")
+            name = input("Line name: ")
+            if name == "0":
+                print("\nBake to employee menu")
+                return 
+            
+            if not name:
+                print("\nLine name cannot be empty")
+                continue
+                    
+            line = self.get_line(name)
+            if not line:
+                print("\nNo line with this name was found")
+                continue
                 
-        line = self.get_line(name)
-        if not line:
-            print("No line with this name was found")
-            return
-                
-        DataStore.lines.remove(line)
-        DataStore.trains = [t for t in DataStore.trains if t.line_name != name]
+            DataStore.lines.remove(line)
+            DataStore.trains = [t for t in DataStore.trains if t.line_name != name]
 
-        print("The line was successfully deleted")
+            print("\nThe line was successfully deleted")
+            return
+
 
     def list_lines(self):
-        print("List of lines")
+        print("\nList of lines")
 
         if not DataStore.lines:
-            print("No lines have been recorded")
+            print("\nNo lines have been recorded")
             return
                 
         for i, line in enumerate(DataStore.lines, start=1):
@@ -215,17 +303,32 @@ class EmployeePanel:
     
     def add_train(self):
         print("\nAdd train")
-        train_name = input("Train name: ")
+        print("Enter 0 to Exit")
+        
+        train_name = input("Train ID: ")
+
+        if train_name == "0":
+            print("\nBake to employee menu")
+            return
+        
         if not train_name:
             print("Train name cannot be empty")
             return
+        
         if self.train_exists(train_name):
             print("This train already exists")
             return
+        
         line_name = input("Line name: ")
+
+        if line_name == "0":
+            print("\nBake to employee menu")
+            return
+        
         if not line_name:
             print("Line name cannot be empty")
             return
+<<<<<<< HEAD
         if not self.line_exists(line_name):
             print("This line does not exist")
             return
@@ -246,9 +349,59 @@ class EmployeePanel:
             print("Price cannot be empty")
             return
         capacity = int(input("Capacity: "))
+=======
+        
+        speed = input("Average speed: ")
+
+        if speed == "0":
+            print("\nBake to employee menu")
+            return
+        
+        if not speed:
+            print("Average speed cannot be empty")
+            return
+        
+        stoptime = input("Stop time: ")
+
+        if stoptime == "0":
+            print("\nBake to employee menu")
+            return
+        
+        if not stoptime:
+            print("Stop time cannot be empty")
+            return
+        
+        train_level = input("Train level: ")
+
+        if train_level == "0":
+            print("\nBake to employee menu")
+            return
+        
+        if not train_level:
+            print("Train level cannot be empty")
+            return
+        
+        price = input("Price: ")
+
+        if price == "0":
+            print("\nBake to employee menu")
+            return
+        
+        if not price:
+            print("Price cannot be empty")
+            return
+        
+        capacity = input("Capacity: ")
+
+        if capacity == "0":
+            print("\nBake to employee menu")
+            return
+        
+>>>>>>> 84fb101 (employee panel (lines) edited)
         if not capacity:
             print("Capacity cannot be empty")
             return
+        
         DataStore.trains.append(
             Train(
                 train_id=train_name,
@@ -375,6 +528,7 @@ class EmployeePanel:
                 return line
             
         return None
+<<<<<<< HEAD
     
     def train_exists (self, name):
         name = name.strip().lower()
@@ -399,6 +553,8 @@ class EmployeePanel:
         if not _input:
             return None
         return self.safe_int(_input)
+=======
+>>>>>>> 84fb101 (employee panel (lines) edited)
 
     
 
