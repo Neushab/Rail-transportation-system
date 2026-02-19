@@ -92,7 +92,6 @@ class NormalUserPanel:
     def purchase_panel(self, user):
         while True:
             print("\n=== Purchase Panel ===")
-            print("DEBUG VERSION 2")
             print(f"User: {user['name']} | Wallet: {user['wallet']}")
             print("1. Buy Ticket")
             print("2. Edit Profile")

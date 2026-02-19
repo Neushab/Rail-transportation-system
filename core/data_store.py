@@ -1,7 +1,7 @@
 class DataStore:
     employees = []
-    users = []
-    trains = []
+    users = {}
+    trains = {}
     lines = []
 
     
