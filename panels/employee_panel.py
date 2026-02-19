@@ -114,9 +114,10 @@ class EmployeePanel:
 
     def update_line(self):
         print("\nUpdate Line")
-        name = input("Line name: ").strip()
 
+        name = input("Line name: ").strip()
         line = self.get_line(name)
+
         if not line:
             print("Line not found.")
             return
@@ -128,22 +129,23 @@ class EmployeePanel:
 
     def delete_line(self):
         print("\nDelete Line")
-        name = input("Line name: ").strip()
 
+        name = input("Line name: ").strip()
         line = self.get_line(name)
+
         if not line:
             print("Line not found.")
             return
 
         DataStore.lines.remove(line)
 
-        # حذف قطارهای مربوط به این خط
-        DataStore.trains = {
-            tid: t for tid, t in DataStore.trains.items()
+        # ✅ حذف قطارهای مربوط به این خط
+        DataStore.trains = [
+            t for t in DataStore.trains
             if t.line_name.lower() != name.lower()
-        }
+        ]
 
-        print("Line and related trains deleted.")
+        print("Line and related trains deleted successfully!")
 
     # ================= TRAIN METHODS =================
     def add_train(self):
@@ -154,8 +156,8 @@ class EmployeePanel:
             print("Train ID required.")
             return
 
-        # چون trains دیکشنریه:
-        if train_id in DataStore.trains:
+        # ✅ چون trains لیست است
+        if any(t.train_id == train_id for t in DataStore.trains):
             print("Train ID already exists!")
             return
 
@@ -177,8 +179,7 @@ class EmployeePanel:
             print("Speed, StopTime, Price, Capacity must be numeric.")
             return
 
-        # ✅ اضافه کردن قطار داخل دیکشنری
-        DataStore.trains[train_id] = Train(
+        new_train = Train(
             train_id,
             train_name,
             line_name,
@@ -189,6 +190,8 @@ class EmployeePanel:
             int(capacity)
         )
 
+        DataStore.trains.append(new_train)
+
         print("Train added successfully!")
 
     def list_trains(self):
@@ -197,7 +200,7 @@ class EmployeePanel:
             print("No trains recorded.")
             return
 
-        for train in DataStore.trains.values():
+        for train in DataStore.trains:
             print(train)
 
     def update_train(self):
@@ -205,7 +208,8 @@ class EmployeePanel:
 
         train_id = input("Train ID: ").strip()
 
-        train = DataStore.trains.get(train_id)
+        train = next((t for t in DataStore.trains if t.train_id == train_id), None)
+
         if not train:
             print("Train not found.")
             return
@@ -223,9 +227,11 @@ class EmployeePanel:
 
         train_id = input("Train ID: ").strip()
 
-        if train_id not in DataStore.trains:
+        train = next((t for t in DataStore.trains if t.train_id == train_id), None)
+
+        if not train:
             print("Train not found.")
             return
 
-        del DataStore.trains[train_id]
+        DataStore.trains.remove(train)
         print("Train deleted successfully!")
