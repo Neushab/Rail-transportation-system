@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+git add .gitignore
+git commit -m "remove pycache and ignore it"
+git push origin develop
+
+
