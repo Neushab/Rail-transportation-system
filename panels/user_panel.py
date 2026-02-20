@@ -217,8 +217,8 @@ class NormalUserPanel:
             return
 
         print("\n--- Available Trains ---")
-        for t in DataStore.trains:
-            print(t)
+        for i, t in enumerate(DataStore.trains, start=1):
+            print(f"{i}. {t}")
 
         train_id = input("Enter Train ID (or 'back'): ").strip()
         if train_id.lower() == "back":
