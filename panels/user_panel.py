@@ -2,6 +2,7 @@ from core.data_store import DataStore
 from core.validators import validate_email, validate_password
 from datetime import datetime
 from panels.BANK import API
+from core.railway import Train
 
 bank_api = API()
 
@@ -260,7 +261,7 @@ class NormalUserPanel:
         ticket_text = (
             f"Ticket Issue Time: {purchase_time}\n"
             f"Buyer: {user['name']} (username={user['username']})\n"
-            f"Train: {train.name} | ID: {train.train_id}\n"
+            f"Train ID: {train.train_id}\n"
             f"Line: {train.line_name}\n"
             f"Tickets Count: {count}\n"
             f"Price (each): {train.price}\n"

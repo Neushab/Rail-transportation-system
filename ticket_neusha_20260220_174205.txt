@@ -1,0 +1,9 @@
+Ticket Issue Time: 2026-02-20 17:42:05.691223
+Buyer: neusha (username=neusha)
+Train ID: teh1
+Line: teh
+Tickets Count: 7
+Price (each): 4000
+Total Paid: 28000
+Remaining Wallet: 6000
+------------------------------------------------------------

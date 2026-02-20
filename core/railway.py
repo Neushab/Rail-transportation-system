@@ -13,14 +13,13 @@ class Line:
 
 
 class Train:
-    def __init__(self, train_id, name, line_name, speed, stoptime, level, price, capacity):
+    def __init__(self, train_id, line_name, average_speed, stoppage, quality_level, price, capacity):
         self.train_id = train_id
-        self.name = name
         self.line_name = line_name
 
-        self.speed = int(speed)
-        self.stoptime = stoptime
-        self.level = level
+        self.average_speed = int(average_speed)
+        self.stoppage = stoppage
+        self.quality_level = quality_level
 
         self.price = int(price)
         self.capacity = int(capacity)
@@ -28,6 +27,6 @@ class Train:
 
     def __str__(self):
         return (
-            f"ID:{self.train_id} | Train:{self.name} | Line:{self.line_name} | "
-            f"Price:{self.price} | Remaining:{self.remaining_capacity}"
+            f"Train ID: {self.train_id} | Line name: {self.line_name} | Average speed: {self.average_speed} | "
+            f"Stoppage: {self.stoppage} | Quality level: {self.quality_level} | Price: {self.price} | Capacity: {self.capacity} | Remaining capacity: {self.remaining_capacity}"
         )
