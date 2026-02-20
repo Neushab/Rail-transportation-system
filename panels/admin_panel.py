@@ -32,12 +32,21 @@ class AdminPanel:
     # ---------- Auth ----------
 
     def admin_login(self) -> bool:
-        username = input("Username: ")
-        password = input("Password: ")
-        if username == admin_username and password == admin_password:
-            print("\nAdmin logged in successfully!")
-            return True
-        print("\nInvalid username or password!")
+        while True:
+            print("Enter 0 to Exit")
+            username = input("Username: ")
+            if username == "0":
+                print("\nBake to main menu")
+                return False
+            password = input("Password: ")
+            if password == "0":
+                print("\nBake to main menu")
+                return False
+            if username == admin_username and password == admin_password:
+                print("\nAdmin logged in successfully!")
+                return True
+            print("\nInvalid username or password!")
+            continue
 
     # ---------- Menu ----------
 
@@ -50,61 +59,85 @@ class AdminPanel:
         print("4. Exit")
 
     def add_employee(self):
-        print("\nAdd Employee")
-        first_name = input("First name: ")
-        last_name = input("Last name: ")
-        email = input("Email: ")
-        username = input("Username: ")
-        password = input("Password: ")
+        while True:
+            print("\nAdd Employee")
+            print("Enter 0 to Exit")
+            first_name = input("First name: ")
+            if first_name == "0":
+                print("\nBake to admin menu")
+                return 
+            last_name = input("Last name: ")
+            if last_name == "0":
+                print("\nBake to admin menu")
+                return 
+            email = input("Email: ")
+            if email == "0":
+                print("\nBake to admin menu")
+                return 
+            username = input("Username: ")
+            if username == "0":
+                print("\nBake to admin menu")
+                return 
+            password = input("Password: ")
+            if password == "0":
+                print("\nBake to admin menu")
+                return 
 
-        #empty checks
-        if not all([first_name, last_name, email, username, password]):
-            print("\nAll fields are required.")
-            return
-        
-        # validations
-        if not validate_email(email):
-            print("\nEmail format is invalid.")
-            return
-        
-        if not validate_password(password):
-            print("\nThe password must contain English letters + numbers + @ or &")
-            return
-        
-        # uniqueness checks
-        if self.email_exists(email):
-            print("\nThis email already exists")
-            return
-        
-        if self.username_exists(username):
-            print("\nThis username already exists")
-            return
-        
-        employee = Employee(
-            first_name=first_name,
-            last_name=last_name,
-            email=email,
-            username=username,
-            password=password,
-        )
+            #empty checks
+            if not all([first_name, last_name, email, username, password]):
+                print("\nAll fields are required.")
+                continue
+            
+            # validations
+            if not validate_email(email):
+                print("\nEmail format is invalid.")
+                continue
+            
+            if not validate_password(password):
+                print("\nThe password must contain English letters + numbers + @ or &")
+                continue
+            
+            # uniqueness checks
+            if self.email_exists(email):
+                print("\nThis email already exists")
+                continue
+            
+            if self.username_exists(username):
+                print("\nThis username already exists")
+                continue
+            
+            employee = Employee(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                username=username,
+                password=password,
+            )
 
-        DataStore.employees.append(employee)
-        print("\nEmployee added successfully")
+            DataStore.employees.append(employee)
+            print("\nEmployee added successfully")
+            return
 
     def remove_employee(self):
-        print("\nRemove Employee")
-        username = input("Employee username: ")
-        if not username:
-            print("\nUsername cannot be empty")
-            return
-        
-        for emp in DataStore.employees:
-            if emp.username == username:
-                DataStore.employees.remove(emp)
-                print("\nEmployee removed")
-                return
+        while True:
+            print("\nRemove Employee")
+            print("Enter 0 to Exit")
+            username = input("Employee username: ")
+            if username == "0":
+                print("\nBake to admin menu")
+                return 
+            if not username:
+                print("\nUsername cannot be empty")
+                continue
             
-        print("\nNo employee with this username was found")
+            for emp in DataStore.employees:
+                if emp.username == username:
+                    DataStore.employees.remove(emp)
+                    print("\nEmployee removed")
+                    return
+                
+            print("\nNo employee with this username was found")
+            continue
 
     def list_employees(self):
         print("\nList of employees")
@@ -113,7 +146,7 @@ class AdminPanel:
             return
         
         for i, emp in enumerate(DataStore.employees, start=1):
-            print(f"{i}. {emp.first_name} {emp.last_name} | {emp.username} | {emp.email}")
+            print(f"{i}. {emp}")
 
     @staticmethod
     def email_exists(email: str) -> bool:
